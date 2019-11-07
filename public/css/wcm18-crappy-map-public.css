@@ -2,3 +2,16 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+#wcm18-crappy-map #crappy-map{
+    background-color: #ddd;
+    height: 67vh;
+}
+
+#wcm18-crappy-map .error {
+    font-weight: bold;
+    background-color: #f00;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    text-align: center;
+}

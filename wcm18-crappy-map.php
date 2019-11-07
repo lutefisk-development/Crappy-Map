@@ -38,6 +38,17 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'WCM18_CRAPPY_MAP_VERSION', '1.0.0' );
 
 /**
+ * Plugin directory path and url.
+ */
+define( 'WCM18_CRAPPY_MAP_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ));
+define( 'WCM18_CRAPPY_MAP_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ));
+
+/**
+ * Require credentials.
+ */
+require_once WCM18_CRAPPY_MAP_PLUGIN_DIR_PATH . 'credentials.php';
+
+/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-wcm18-crappy-map-activator.php
  */

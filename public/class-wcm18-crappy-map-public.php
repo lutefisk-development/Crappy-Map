@@ -52,6 +52,8 @@ class Wcm18_Crappy_Map_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		$this->define_shortcodes();
+
 	}
 
 	/**
@@ -84,20 +86,38 @@ class Wcm18_Crappy_Map_Public {
 	 */
 	public function enqueue_scripts() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wcm18_Crappy_Map_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wcm18_Crappy_Map_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wcm18-crappy-map-public.js', ['jquery'], $this->version, true );
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wcm18-crappy-map-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script('crappy-map', 'https://maps.googleapis.com/maps/api/js?key='. WCM18_CRAPPY_MAP_GOOGLE_MAPS_API_KEY .'&callback=initMap', [], false, true);
+	}
 
+	/**
+	 * Register shortcodes for crappy map plugin.
+	 */
+	public function define_shortcodes() {
+		add_shortcode('cm', [$this, 'do_shortcode_cm']);
+	}
+
+	/**
+	 * 
+	 */
+	public function do_shortcode_cm($user_atts) {
+		$default_atts = [
+			'address' => false,
+		];
+
+		$atts = shortcode_atts($default_atts, $user_atts, 'cm');
+
+		// Verification.
+		if($atts['address'] == false) {
+			return '<div id="wcm18-crappy-map"><div class="error">You didnt add a address as a parameter</div></div>';
+		}
+
+		// Displays the map.
+		return sprintf(
+			'<div id="wcm18-crappy-map" data-address="%s"><div id="crappy-map"></div></div>', 
+			$atts['address']
+		);
 	}
 
 }
